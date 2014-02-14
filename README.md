@@ -16,18 +16,18 @@ For steps to create a certificate and export to Azure visit http://gauravmantri.
 
 1. Run "mvn clean install"
 2. Download and unzip the file 'target/AzureMonitor.zip' to \<machineagent install dir\}/monitors
-3. Open monitor.xml and configure the Azure arguments.
+3. Open monitor.xml and configure the Azure arguments
+
 <pre>
-```
-<argument name="subscriptionId" is-required="true" default-value="4814ab8f-ebb8-42b5-ac5c-69b675d19e2c" />
-<argument name="keyStorePath" is-required="true" default-value="/home/satish/WindowsAzureKeyStore.jks" />
-<argument name="keyStorePassword" is-required="true" default-value="appdAzure123" />
-<!-- Azure REST API version, More info at http://msdn.microsoft.com/en-us/library/windowsazure/dn166981.aspx -->
-<argument name="x-ms-version" is-required="true" default-value="2013-11-01" />
-<!-- The configuration file which lists out the metrics to be included from monitoring on controller-->
-<argument name="include-metrics-path" is-required="true" default-value="monitors/AzureMonitor/metrics.properties" />
-```
+&lt;argument name="subscriptionId" is-required="true" default-value="4814ab8f-ebb8-42b5-ac5c-69b675d19e2c" /&gt;
+&lt;argument name="keyStorePath" is-required="true" default-value="/home/satish/WindowsAzureKeyStore.jks" /&gt;
+&lt;argument name="keyStorePassword" is-required="true" default-value="appdAzure123" /&gt;
+&lt;!-- Azure REST API version, More info at http://msdn.microsoft.com/en-us/library/windowsazure/dn166981.aspx --&gt;
+&lt;argument name="x-ms-version" is-required="true" default-value="2013-11-01" /&gt;
+&lt;!-- The configuration file which lists out the metrics to be included from monitoring on controller--&gt;
+&lt;argument name="include-metrics-path" is-required="true" default-value="monitors/AzureMonitor/metrics.properties" /&gt;
 </pre>
+
 SubscriptionId : Azure subscription id
 keyStorePath : Path of keystore created in step a
 keyStorePassword : Password for the keystore
