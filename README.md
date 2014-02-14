@@ -6,7 +6,6 @@ This extension works only with the standalone machine agent.
 
 Windows Azure is an Internet-scale computing and services platform hosted in Microsoft data centers. It includes a number of features with corresponding developer services which can be used individually or together.
 
-Through the use of Azure REST API(http://msdn.microsoft.com/en-us/library/windowsazure/ff800682.aspx) and AppDynamics Machine Agent API, we plan to build the Azure Monitoring Extension.which will allow our customers to integrate and monitor Azure metrics on AppDynamics UI.
 
 ##Prerequisite
 Create and export management certificate to azure
