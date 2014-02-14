@@ -15,7 +15,7 @@ For steps to create a certificate and export to Azure visit http://gauravmantri.
 
 1. Run "mvn clean install"
 2. Download and unzip the file 'target/AzureMonitor.zip' to \<machineagent install dir\}/monitors
-3. Open monitor.xml and configure the Azure arguments
+3. Open <b>monitor.xml</b> and configure the Azure arguments
 
 <pre>
 &lt;argument name="subscriptionId" is-required="true" default-value="4814ab8f-ebb8-42b5-ac5c-69b675d19e2c" /&gt;
@@ -27,15 +27,15 @@ For steps to create a certificate and export to Azure visit http://gauravmantri.
 &lt;argument name="include-metrics-path" is-required="true" default-value="monitors/AzureMonitor/metrics.properties" /&gt;
 </pre>
 
-SubscriptionId : Azure subscription id
-keyStorePath : Path of keystore created in step a
-keyStorePassword : Password for the keystore
-x-ms-version : Azure REST API version (For more info refer http://msdn.microsoft.com/en-us/library/windowsazure/dn166981.aspx)
-include-metrics-path : Path to metrics.properties
+<b>SubscriptionId</b> : Azure subscription id <br/>
+<b>keyStorePath</b> : Path of keystore which is created and uploaded to azure <br/>
+<b>keyStorePassword</b> : Password for the keystore <br/>
+<b>x-ms-version</b> : Azure REST API version (For more info refer http://msdn.microsoft.com/en-us/library/windowsazure/dn166981.aspx) <br/>
+<b>include-metrics-path</b> : Path to metrics.properties <br/>
 
-4. Open metrics.properties and configure storage account names.
-	STORAGE_ACCOUNT_NAMES_FOR_TABLE: Storage account name for which table level metrics to be fetched
-	STORAGE_ACCOUNT_NAMES_FOR_BLOB: Storage account name for which blob level metrics to be fetched
+ Open <b>metrics.properties</b> and configure storage account names <br/>
+	<b>STORAGE_ACCOUNT_NAMES_FOR_TABLE</b>: Storage account name for which table level metrics to be fetched <br/>
+	<b>STORAGE_ACCOUNT_NAMES_FOR_BLOB</b>: Storage account name for which blob level metrics to be fetched <br/>
 
 
 ##Metrics
