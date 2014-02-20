@@ -1,6 +1,5 @@
 package com.appdynamics.monitors.azure.statsCollector;
 
-import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.HttpURLConnection;
@@ -55,19 +54,5 @@ public class TableStatsCollector extends StorageStatsCollector {
                 }
         }
         return tableStatsMap;
-    }
-
-    public static void main(String[] args) throws IOException {
-        String subscriptionId = "4814ab8f-ebb8-42b5-ac5c-69b675d19e2c";
-        String keyStorePath = "/home/satish/WindowsAzureKeyStore.jks";
-        String keyStorePassword = "appdAzure123";
-
-        TableStatsCollector tableStatsCollector = new TableStatsCollector();
-
-        Properties properties = new Properties();
-        properties.load(new FileInputStream("/home/satish/AppDynamics/Code/extensions/azure-monitoring-extension/src/main/resources/config/metrics.properties"));
-        
-        Map<String, Number> stringNumberMap = tableStatsCollector.collectStats(keyStorePath, keyStorePassword, subscriptionId, "2013-11-01", properties);
-        System.out.println(stringNumberMap);
     }
 }
