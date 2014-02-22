@@ -1,4 +1,4 @@
-# AppDynamics Azure Monitoring Extension
+# Windows Azure Monitoring Extension
 
 This extension works only with the standalone machine agent.
 
