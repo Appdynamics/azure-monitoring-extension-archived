@@ -14,49 +14,49 @@
                     "displayName" : "Execution Style",
                     "defaultValue" : "periodic",
                     "description" : "The data to be reported from system performance counters periodically.",
-                    "isRequired" : true
+                    "required" : true
                 },
 				{
 					"name" : "execution-frequency-in-seconds",
 					"displayName" : "Execution Frequency",
 					"defaultValue" : "60",
 					"description" : "Determines the execution frequency in seconds.",
-					"isRequired" : true
+					"required" : true
 				},
 				{
 					"name" : "execution-timeout-in-seconds",
 					"displayName" : "Execution Timeout",
 					"defaultValue" : "60",
 					"description" : "Determines the execution timeout in seconds.",
-					"isRequired" : true
+					"required" : true
 				},
 				{
 					"name" : "subscriptionId",
 					"displayName" : "Subscription Id",
 					"defaultValue" : "",
 					"description" : "Subscription Id from your Azure account.",
-					"isRequired" : true
+					"required" : true
 				},
 				{
 					"name" : "keyStorePath",
 					"displayName" : "Key Store Path",
 					"defaultValue" : "",
 					"description" : "Key Store for your Azure account.",
-					"isRequired" : true
+					"required" : true
 				},
 				{
 					"name" : "keyStorePassword",
 					"displayName" : "Key Store Password",
 					"defaultValue" : "appdAzure123",
 					"description" : "Key Store Password for your Azure account.",
-					"isRequired" : true
+					"required" : true
 				},
 				{
 					"name" : "x-ms-version",
 					"displayName" : "Azure API Version",
 					"defaultValue" : "2013-11-01",
 					"description" : "Azure REST API version.",
-					"isRequired" : true
+					"required" : true
 				}
 			]
 		},
