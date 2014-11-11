@@ -14,34 +14,55 @@
                     "displayName" : "Execution Style",
                     "defaultValue" : "periodic",
                     "description" : "The data to be reported from system performance counters periodically.",
-                    "isOptional" : false
+                    "isRequired" : true
                 },
 				{
 					"name" : "execution-frequency-in-seconds",
 					"displayName" : "Execution Frequency",
 					"defaultValue" : "60",
 					"description" : "Determines the execution frequency in seconds.",
-					"isOptional" : false
+					"isRequired" : true
 				},
 				{
 					"name" : "execution-timeout-in-seconds",
 					"displayName" : "Execution Timeout",
 					"defaultValue" : "60",
 					"description" : "Determines the execution timeout in seconds.",
-					"isOptional" : false
+					"isRequired" : true
 				},
 				{
-					"name" : "log-prefix",
-					"displayName" : "Log Prefix",
-					"defaultValue" : "[SslCertAppDMonitor] ",
-					"description" : "Prefix used in logs. Helpful while debugging.",
-					"isOptional" : true
+					"name" : "subscriptionId",
+					"displayName" : "Subscription Id",
+					"defaultValue" : "",
+					"description" : "Subscription Id from your Azure account.",
+					"isRequired" : true
+				},
+				{
+					"name" : "keyStorePath",
+					"displayName" : "Key Store Path",
+					"defaultValue" : "",
+					"description" : "Key Store for your Azure account.",
+					"isRequired" : true
+				},
+				{
+					"name" : "keyStorePassword",
+					"displayName" : "Key Store Password",
+					"defaultValue" : "appdAzure123",
+					"description" : "Key Store Password for your Azure account.",
+					"isRequired" : true
+				},
+				{
+					"name" : "x-ms-version",
+					"displayName" : "Azure API Version",
+					"defaultValue" : "2013-11-01",
+					"description" : "Azure REST API version.",
+					"isRequired" : true
 				}
 			]
 		},
 		{
-			"name" : "config.yaml",
-			"link" : "https://raw.githubusercontent.com/Appdynamics/ssl-certificate-monitoring-extension/master/src/main/resources/conf/config.yml"
+			"name" : "metrics.properties",
+			"link" : "https://raw.githubusercontent.com/Appdynamics/azure-monitoring-extension/master/src/main/resources/config/metrics.properties"
 		}
 	]
 
