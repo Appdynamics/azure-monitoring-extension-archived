@@ -1,6 +1,6 @@
 {
 	"id" : "ssl-certificate-monitoring-extension",
-	"description" : "Azure Monitoring Extension",
+	"description" : "Azure Monitoring Extension.",
 	"version" : "1.0.0",
 	"repoLink" : "https://github.com/Appdynamics/azure-monitoring-extension",
 	"downloadFilename" : "AzureMonitor.zip",
