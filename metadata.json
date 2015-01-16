@@ -1,10 +1,12 @@
 {
-	"id" : "ssl-certificate-monitoring-extension",
+	"id" : "azure-monitoring-extension",
+	"type" : "monitor",
+	"displayName" : "Azure Monitoring Extension",
 	"description" : "Azure Monitoring Extension.",
 	"version" : "1.0.0",
-	"repoLink" : "https://github.com/Appdynamics/azure-monitoring-extension",
-	"downloadFilename" : "AzureMonitor.zip",
-	"configs" : [
+	"imageLink" : "https://no-cache.appdynamics-static.com/appsphere/logos/rabbitmq_128.png",
+	"downloadLink" : "https://github.com/Appdynamics/azure-monitoring-extension/releases/download/1.0.0/AzureMonitor-1.0.0.zip",
+	"defaultConfigs" : [
 		{
 			"name" : "monitor.xml",
 			"link" : "https://raw.githubusercontent.com/Appdynamics/azure-monitoring-extension/master/src/main/resources/config/monitor.xml",
@@ -24,7 +26,7 @@
 					"required" : true
 				},
 				{
-					"name" : "execution-timeout-in-seconds",
+					"name" : "execution-timeout-in-secs",
 					"displayName" : "Execution Timeout",
 					"defaultValue" : "60",
 					"description" : "Determines the execution timeout in seconds.",
