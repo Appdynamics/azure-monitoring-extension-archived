@@ -3,9 +3,9 @@
 	"type" : "monitor",
 	"displayName" : "Azure Monitoring Extension",
 	"description" : "Azure Monitoring Extension.",
-	"version" : "1.0.0",
+	"version" : "1.0.1",
 	"imageLink" : "https://no-cache.appdynamics-static.com/appsphere/logos/rabbitmq_128.png",
-	"downloadLink" : "https://github.com/Appdynamics/azure-monitoring-extension/releases/download/1.0.0/AzureMonitor-1.0.0.zip",
+	"downloadLink" : "https://github.com/Appdynamics/azure-monitoring-extension/releases/download/1.0.1/AzureMonitor.zip",
 	"defaultConfigs" : [
 		{
 			"name" : "monitor.xml",
