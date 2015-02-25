@@ -1,14 +1,16 @@
 package com.appdynamics.monitors.azure.statsCollector;
 
+import com.appdynamics.monitors.azure.request.AzureHttpsClient;
+import org.apache.log4j.Logger;
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
+import org.w3c.dom.NodeList;
+
 import java.io.InputStream;
 import java.net.URL;
 import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Properties;
-import org.apache.log4j.Logger;
-import org.w3c.dom.Document;
-import org.w3c.dom.Element;
-import org.w3c.dom.NodeList;
 
 public class DatabaseStatsCollector extends AbstractStatsCollector {
 
@@ -18,14 +20,20 @@ public class DatabaseStatsCollector extends AbstractStatsCollector {
     private static final String DATABASE_REST = "https://management.core.windows.net/%s/services/sqlservers/servers/%s/databases?contentview=generic";
     private static final String METRIC_PATH = "DATABASE SERVER|%s|DATABASE|%s|";
     private static final int MB_TO_BYTE = 1048576;
-    
+
+    private final AzureHttpsClient azureHttpsClient;
+
+    public DatabaseStatsCollector(AzureHttpsClient azureHttpsClient) {
+        this.azureHttpsClient = azureHttpsClient;
+    }
+
     @Override
     public Map<String, Number> collectStats(String keyStorePath, String keyStorePassword, String subscriptionId, String restApiVersion, Properties displayProperties) {
-        URL url = buildRequestUrl(DATABASE_SERVERS_REST, subscriptionId);
+        URL url = azureHttpsClient.buildRequestUrl(DATABASE_SERVERS_REST, subscriptionId);
 
-        InputStream responseStream = processGetRequest(url, restApiVersion, keyStorePath, keyStorePassword);
+        InputStream responseStream = azureHttpsClient.processGetRequest(url, restApiVersion, keyStorePath, keyStorePassword);
 
-        Document document = parseResponse(responseStream);
+        Document document = azureHttpsClient.parseResponse(responseStream);
 
         Map<String, Number> databaseStatsMap = new LinkedHashMap<String, Number>();
 
@@ -35,11 +43,11 @@ public class DatabaseStatsCollector extends AbstractStatsCollector {
             Element element = (Element)databaseServersNodeList.item(i);
             String databaseServerName = element.getElementsByTagName("Name").item(0).getTextContent();
 
-            URL databaseURL = buildRequestUrl(DATABASE_REST, subscriptionId, databaseServerName);
+            URL databaseURL = azureHttpsClient.buildRequestUrl(DATABASE_REST, subscriptionId, databaseServerName);
 
-            InputStream databaseResponseStream = processGetRequest(databaseURL, restApiVersion, keyStorePath, keyStorePassword);
+            InputStream databaseResponseStream = azureHttpsClient.processGetRequest(databaseURL, restApiVersion, keyStorePath, keyStorePassword);
 
-            Document databaseDocument = parseResponse(databaseResponseStream);
+            Document databaseDocument = azureHttpsClient.parseResponse(databaseResponseStream);
             NodeList databaseNodeList = databaseDocument.getElementsByTagName("ServiceResource");
             
             for(int j = 0; j < databaseNodeList.getLength(); j++) {

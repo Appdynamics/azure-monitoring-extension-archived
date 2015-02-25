@@ -1,14 +1,16 @@
 package com.appdynamics.monitors.azure.statsCollector;
 
+import com.appdynamics.monitors.azure.request.AzureHttpsClient;
+import org.apache.log4j.Logger;
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
+import org.w3c.dom.NodeList;
+
 import java.io.InputStream;
 import java.net.URL;
 import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Properties;
-import org.apache.log4j.Logger;
-import org.w3c.dom.Document;
-import org.w3c.dom.Element;
-import org.w3c.dom.NodeList;
 
 public class OSImageStatsCollector extends AbstractStatsCollector {
 
@@ -16,14 +18,20 @@ public class OSImageStatsCollector extends AbstractStatsCollector {
 
     private static final String OS_IMAGE_REST = "https://management.core.windows.net/%s/services/images";
     private static final String METRIC_PATH = "OS Image|%s|LogicalSizeInGB|";
-    
+
+    private final AzureHttpsClient azureHttpsClient;
+
+    public OSImageStatsCollector(AzureHttpsClient azureHttpsClient) {
+        this.azureHttpsClient = azureHttpsClient;
+    }
+
     @Override
     public Map<String, Number> collectStats(String keyStorePath, String keyStorePassword, String subscriptionId, String restApiVersion, Properties displayProperties) {
-        URL url = buildRequestUrl(OS_IMAGE_REST, subscriptionId);
+        URL url = azureHttpsClient.buildRequestUrl(OS_IMAGE_REST, subscriptionId);
 
-        InputStream responseStream = processGetRequest(url, restApiVersion, keyStorePath, keyStorePassword);
+        InputStream responseStream = azureHttpsClient.processGetRequest(url, restApiVersion, keyStorePath, keyStorePassword);
 
-        Document document = parseResponse(responseStream);
+        Document document = azureHttpsClient.parseResponse(responseStream);
 
         Map<String, Number> osImageStatsMap = new LinkedHashMap<String, Number>();
 

@@ -1,5 +1,11 @@
 package com.appdynamics.monitors.azure.statsCollector;
 
+import com.appdynamics.monitors.azure.request.AzureHttpsClient;
+import org.apache.log4j.Logger;
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
+import org.w3c.dom.NodeList;
+
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.HttpURLConnection;
@@ -8,10 +14,6 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Properties;
-import org.apache.log4j.Logger;
-import org.w3c.dom.Document;
-import org.w3c.dom.Element;
-import org.w3c.dom.NodeList;
 
 public class BlobStatsCollector extends StorageStatsCollector {
 
@@ -23,6 +25,10 @@ public class BlobStatsCollector extends StorageStatsCollector {
     private static final String METRIC_PATH = "Storage|Blob|%s|Container|%s|Blobs|%s|";
 
     public static final String STORAGE_ACCOUNT_NAMES_FOR_BLOB_KEY = "STORAGE_ACCOUNT_NAMES_FOR_BLOB";
+
+    public BlobStatsCollector(AzureHttpsClient azureHttpsClient) {
+        super(azureHttpsClient);
+    }
 
     @Override
     public Map<String, Number> collectStats(String keyStorePath, String keyStorePassword, String subscriptionId, String restApiVersion, Properties displayProperties) {
@@ -43,11 +49,11 @@ public class BlobStatsCollector extends StorageStatsCollector {
 
         for(Map.Entry<String, String> storageAccountNameKey : storageAccountNamesWithKey.entrySet()) {
             String containerURL = String.format(CONTAINERS_REST, storageAccountNameKey.getKey());
-            HttpURLConnection httpConnection = createHttpConnectionWithHeadersForBlobQueue(containerURL, storageAccountNameKey.getKey(), storageAccountNameKey.getValue());
+            HttpURLConnection httpConnection = azureHttpsClient.createHttpConnectionWithHeadersForBlobQueue(containerURL, storageAccountNameKey.getKey(), storageAccountNameKey.getValue());
 
                 try {
                     InputStream responseStream = (InputStream) httpConnection.getContent();
-                    Document document = parseResponse(responseStream);
+                    Document document = azureHttpsClient.parseResponse(responseStream);
                     NodeList containersNodeList = document.getElementsByTagName("Container");
 
                     for(int i = 0; i < containersNodeList.getLength(); i++) {
@@ -55,11 +61,11 @@ public class BlobStatsCollector extends StorageStatsCollector {
                         String containerName = element.getElementsByTagName("Name").item(0).getTextContent();
 
                         String blobURL = String.format(BLOB_REST, storageAccountNameKey.getKey(), containerName);
-                        httpConnection = createHttpConnectionWithHeadersForBlobQueue(blobURL, storageAccountNameKey.getKey(), storageAccountNameKey.getValue());
+                        httpConnection = azureHttpsClient.createHttpConnectionWithHeadersForBlobQueue(blobURL, storageAccountNameKey.getKey(), storageAccountNameKey.getValue());
                             try {
                                 InputStream blobsResponseStream = (InputStream) httpConnection.getContent();
 
-                                Document blobDocument = parseResponse(blobsResponseStream);
+                                Document blobDocument = azureHttpsClient.parseResponse(blobsResponseStream);
 
                                 NodeList blobNodeList = blobDocument.getElementsByTagName("Blob");
 
@@ -84,7 +90,6 @@ public class BlobStatsCollector extends StorageStatsCollector {
                 } catch (IOException e) {
                     LOG.error("Unable to process response", e);
                 }
-
         }
         return blobStatsMap;
     }

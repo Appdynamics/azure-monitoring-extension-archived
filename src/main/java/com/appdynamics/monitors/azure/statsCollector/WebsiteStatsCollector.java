@@ -1,5 +1,11 @@
 package com.appdynamics.monitors.azure.statsCollector;
 
+import com.appdynamics.monitors.azure.request.AzureHttpsClient;
+import org.apache.log4j.Logger;
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
+import org.w3c.dom.NodeList;
+
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
@@ -8,10 +14,6 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Properties;
-import org.apache.log4j.Logger;
-import org.w3c.dom.Document;
-import org.w3c.dom.Element;
-import org.w3c.dom.NodeList;
 
 public class WebsiteStatsCollector extends AbstractStatsCollector {
 
@@ -23,14 +25,20 @@ public class WebsiteStatsCollector extends AbstractStatsCollector {
     
     
     private static final String METRIC_PATH = "Web Space|%s|";
-    
+
+    private final AzureHttpsClient azureHttpsClient;
+
+    public WebsiteStatsCollector(AzureHttpsClient azureHttpsClient) {
+        this.azureHttpsClient = azureHttpsClient;
+    }
+
     @Override
     public Map<String, Number> collectStats(String keyStorePath, String keyStorePassword, String subscriptionId, String restApiVersion, Properties displayProperties) {
-        URL webSpacesUrl = buildRequestUrl(WEB_SPACES_REST, subscriptionId);
+        URL webSpacesUrl = azureHttpsClient.buildRequestUrl(WEB_SPACES_REST, subscriptionId);
 
-        InputStream responseStream = processGetRequest(webSpacesUrl, restApiVersion, keyStorePath, keyStorePassword);
+        InputStream responseStream = azureHttpsClient.processGetRequest(webSpacesUrl, restApiVersion, keyStorePath, keyStorePassword);
 
-        Document webSpaceDocument = parseResponse(responseStream);
+        Document webSpaceDocument = azureHttpsClient.parseResponse(responseStream);
 
         Map<String, Number> websiteStatsMap = new LinkedHashMap<String, Number>();
         NodeList webSpaceNodeList = webSpaceDocument.getElementsByTagName("WebSpace");
@@ -99,11 +107,11 @@ public class WebsiteStatsCollector extends AbstractStatsCollector {
         }
 
         for(String webSpace : webSpaceNames) {
-            URL webSitesUrl = buildRequestUrl(WEBSITES_REST, subscriptionId, webSpace);
+            URL webSitesUrl = azureHttpsClient.buildRequestUrl(WEBSITES_REST, subscriptionId, webSpace);
     
-            responseStream = processGetRequest(webSitesUrl, restApiVersion, keyStorePath, keyStorePassword);
+            responseStream = azureHttpsClient.processGetRequest(webSitesUrl, restApiVersion, keyStorePath, keyStorePassword);
 
-            Document websiteDocument = parseResponse(responseStream);
+            Document websiteDocument = azureHttpsClient.parseResponse(responseStream);
 
             NodeList websiteNodeList = websiteDocument.getElementsByTagName("Site");
             for(int i = 0; i < websiteNodeList.getLength(); i++) {
@@ -140,9 +148,9 @@ public class WebsiteStatsCollector extends AbstractStatsCollector {
                 
                 //website usage stats
 
-                URL webSitesUsageUrl = buildRequestUrl(WEBSITE_USAGE_REST, subscriptionId, webSpace, websiteName);
-                responseStream = processGetRequest(webSitesUsageUrl, restApiVersion, keyStorePath, keyStorePassword);
-                Document websiteUsageDocument = parseResponse(responseStream);
+                URL webSitesUsageUrl = azureHttpsClient.buildRequestUrl(WEBSITE_USAGE_REST, subscriptionId, webSpace, websiteName);
+                responseStream = azureHttpsClient.processGetRequest(webSitesUsageUrl, restApiVersion, keyStorePath, keyStorePassword);
+                Document websiteUsageDocument = azureHttpsClient.parseResponse(responseStream);
                 NodeList websiteUsageNodeList = websiteUsageDocument.getElementsByTagName("Usage");
 
                 String websiteUsageMetricPath =  String.format(METRIC_PATH, webSpace)+websiteName+"|Usage Metrics|";
