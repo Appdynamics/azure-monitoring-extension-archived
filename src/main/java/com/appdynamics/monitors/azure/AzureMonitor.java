@@ -149,7 +149,6 @@ public class AzureMonitor extends AManagedMonitor {
 
     private void printMetric(String metricPrefix, String metricPath, Object metricValue) {
 
-        System.out.println(metricPrefix + metricPath+" ### "+metricValue);
         MetricWriter metricWriter = super.getMetricWriter(metricPrefix + metricPath, MetricWriter.METRIC_AGGREGATION_TYPE_AVERAGE, MetricWriter.METRIC_TIME_ROLLUP_TYPE_AVERAGE, MetricWriter.METRIC_CLUSTER_ROLLUP_TYPE_COLLECTIVE
         );
         if (metricValue instanceof Double) {
