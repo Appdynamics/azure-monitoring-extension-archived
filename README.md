@@ -17,21 +17,32 @@ For steps to create a certificate and export to Azure visit http://gauravmantri.
 2. Download and unzip the file 'target/AzureMonitor.zip' to \<machineagent install dir\}/monitors
 3. Open <b>monitor.xml</b> and configure the Azure arguments
 
-<pre>
-&lt;argument name="subscriptionId" is-required="true" default-value="4814ab8f-ebb8-42b5-ac5c-69b675d19e2c" /&gt;
-&lt;argument name="keyStorePath" is-required="true" default-value="/home/satish/WindowsAzureKeyStore.jks" /&gt;
-&lt;argument name="keyStorePassword" is-required="true" default-value="appdAzure123" /&gt;
-&lt;!-- Azure REST API version, More info at http://msdn.microsoft.com/en-us/library/windowsazure/dn166981.aspx --&gt;
-&lt;argument name="x-ms-version" is-required="true" default-value="2013-11-01" /&gt;
-&lt;!-- The configuration file which lists out the metrics to be included from monitoring on controller--&gt;
-&lt;argument name="include-metrics-path" is-required="true" default-value="monitors/AzureMonitor/metrics.properties" /&gt;
-</pre>
+```
+<argument name="subscriptionId" is-required="true" default-value="4814ab8f-ebb8-42b5-ac5c-69b675d19e2c" />
+<argument name="keyStorePath" is-required="true" default-value="/home/satish/AppDynamics/Azure/WindowsAzureKeyStore.jks" />
+<argument name="keyStorePassword" is-required="true" default-value="appdAzure123" />
+
+<!-- Azure REST API version, More info at http://msdn.microsoft.com/en-us/library/windowsazure/dn166981.aspx -->
+ <argument name="x-ms-version" is-required="true" default-value="2013-11-01" />
+ <!-- The configuration file which lists out the metrics to be included from monitoring on controller-->
+ <argument name="include-metrics-path" is-required="true" default-value="monitors/AzureMonitor/metrics.properties" />
+
+ <!--Proxy server details-->
+<argument name="proxyHost" is-required="false" default-value="" />
+<argument name="proxyPort" is-required="false" default-value="" />
+<argument name="proxyUsername" is-required="false" default-value="" />
+<argument name="proxyPassword" is-required="false" default-value="" />
+```
 
 <b>SubscriptionId</b> : Azure subscription id <br/>
 <b>keyStorePath</b> : Path of keystore which is created and uploaded to azure <br/>
 <b>keyStorePassword</b> : Password for the keystore <br/>
 <b>x-ms-version</b> : Azure REST API version (For more info refer http://msdn.microsoft.com/en-us/library/windowsazure/dn166981.aspx) <br/>
 <b>include-metrics-path</b> : Path to metrics.properties <br/>
+<b>proxyHost</b> : Proxy server host if any <br/>
+<b>proxyPort</b> : Proxy server port if any <br/>
+<b>proxyUsername</b> : Proxy server user name if any <br/>
+<b>proxyPassword</b> : Proxy server password if any <br/>
 
  Open <b>metrics.properties</b> and configure storage account names <br/>
 	<b>STORAGE_ACCOUNT_NAMES_FOR_TABLE</b>: Storage account name for which table level metrics to be fetched <br/>
