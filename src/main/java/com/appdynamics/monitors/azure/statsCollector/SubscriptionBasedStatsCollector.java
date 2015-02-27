@@ -5,7 +5,6 @@ import org.apache.log4j.Logger;
 import org.w3c.dom.Document;
 import org.w3c.dom.NodeList;
 
-import java.io.InputStream;
 import java.net.URL;
 import java.util.LinkedHashMap;
 import java.util.Map;
@@ -41,9 +40,7 @@ public class SubscriptionBasedStatsCollector extends AbstractStatsCollector {
 
         URL url = azureHttpsClient.buildRequestUrl(SUBSCRIPTION_REST, subscriptionId);
 
-        InputStream responseStream = azureHttpsClient.processGetRequest(url, restApiVersion, keyStorePath, keyStorePassword);
-
-        Document document = azureHttpsClient.parseResponse(responseStream);
+        Document document = azureHttpsClient.processGetRequest(url, restApiVersion, keyStorePath, keyStorePassword);
 
         Map<String, Number> subscriptionStatsMap = new LinkedHashMap<String, Number>();
         for (String subscriptionProperty : subscriptionStatsToShow) {

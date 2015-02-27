@@ -6,7 +6,6 @@ import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
 
-import java.io.InputStream;
 import java.net.URL;
 import java.util.LinkedHashMap;
 import java.util.Map;
@@ -31,9 +30,7 @@ public class DatabaseStatsCollector extends AbstractStatsCollector {
     public Map<String, Number> collectStats(String keyStorePath, String keyStorePassword, String subscriptionId, String restApiVersion, Properties displayProperties) {
         URL url = azureHttpsClient.buildRequestUrl(DATABASE_SERVERS_REST, subscriptionId);
 
-        InputStream responseStream = azureHttpsClient.processGetRequest(url, restApiVersion, keyStorePath, keyStorePassword);
-
-        Document document = azureHttpsClient.parseResponse(responseStream);
+        Document document = azureHttpsClient.processGetRequest(url, restApiVersion, keyStorePath, keyStorePassword);
 
         Map<String, Number> databaseStatsMap = new LinkedHashMap<String, Number>();
 
@@ -45,9 +42,7 @@ public class DatabaseStatsCollector extends AbstractStatsCollector {
 
             URL databaseURL = azureHttpsClient.buildRequestUrl(DATABASE_REST, subscriptionId, databaseServerName);
 
-            InputStream databaseResponseStream = azureHttpsClient.processGetRequest(databaseURL, restApiVersion, keyStorePath, keyStorePassword);
-
-            Document databaseDocument = azureHttpsClient.parseResponse(databaseResponseStream);
+            Document databaseDocument = azureHttpsClient.processGetRequest(databaseURL, restApiVersion, keyStorePath, keyStorePassword);
             NodeList databaseNodeList = databaseDocument.getElementsByTagName("ServiceResource");
             
             for(int j = 0; j < databaseNodeList.getLength(); j++) {

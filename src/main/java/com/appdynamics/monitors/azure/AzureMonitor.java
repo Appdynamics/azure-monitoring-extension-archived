@@ -28,11 +28,11 @@ public class AzureMonitor extends AManagedMonitor {
     private Properties displayProperties;
 
     public TaskOutput execute(Map<String, String> taskArguments, TaskExecutionContext taskExecutionContext) throws TaskExecutionException {
-        
-        if(LOG.isDebugEnabled()) {
+
+        if (LOG.isDebugEnabled()) {
             LOG.debug("Collecting stats from Azure");
         }
-        
+
         String subscriptionId = taskArguments.get("subscriptionId");
         String keyStorePath = taskArguments.get("keyStorePath");
         String keyStorePassword = taskArguments.get("keyStorePassword");
@@ -140,15 +140,14 @@ public class AzureMonitor extends AManagedMonitor {
             printMetric(metricPathPrefix, stat.getKey(), statValue);
         }
 
-        if(LOG.isDebugEnabled()) {
+        if (LOG.isDebugEnabled()) {
             LOG.debug("Finished collecting stats from Azure");
         }
-        
+
         return new TaskOutput("AzureMonitor completed successfully");
     }
 
     private void printMetric(String metricPrefix, String metricPath, Object metricValue) {
-
         MetricWriter metricWriter = super.getMetricWriter(metricPrefix + metricPath, MetricWriter.METRIC_AGGREGATION_TYPE_AVERAGE, MetricWriter.METRIC_TIME_ROLLUP_TYPE_AVERAGE, MetricWriter.METRIC_CLUSTER_ROLLUP_TYPE_COLLECTIVE
         );
         if (metricValue instanceof Double) {

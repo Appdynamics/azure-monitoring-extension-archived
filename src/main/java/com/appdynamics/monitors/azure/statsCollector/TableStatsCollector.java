@@ -5,9 +5,6 @@ import org.apache.log4j.Logger;
 import org.w3c.dom.Document;
 import org.w3c.dom.NodeList;
 
-import java.io.IOException;
-import java.io.InputStream;
-import java.net.HttpURLConnection;
 import java.util.Arrays;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -46,18 +43,10 @@ public class TableStatsCollector extends StorageStatsCollector {
         Map<String, Number> tableStatsMap = new LinkedHashMap<String, Number>();
         for (Map.Entry<String, String> storageAccountNameKey : storageAccountNamesWithKey.entrySet()) {
             String tableURL = String.format(TABLE_REST, storageAccountNameKey.getKey());
-
-            HttpURLConnection httpConnection = azureHttpsClient.createHttpConnectionWithHeadersForTable(tableURL, storageAccountNameKey.getKey(), storageAccountNameKey.getValue());
-
-            try {
-                InputStream responseStream = (InputStream) httpConnection.getContent();
-                Document document = azureHttpsClient.parseResponse(responseStream);
-                NodeList containersNodeList = document.getElementsByTagName("entry");
-                int length = containersNodeList.getLength();
-                tableStatsMap.put(String.format(METRIC_PATH, storageAccountNameKey.getKey()), length);
-            } catch (IOException e) {
-                LOG.error("Unable to process response", e);
-            }
+            Document document = azureHttpsClient.createHttpConnectionWithHeadersForTable(tableURL, storageAccountNameKey.getKey(), storageAccountNameKey.getValue());
+            NodeList containersNodeList = document.getElementsByTagName("entry");
+            int length = containersNodeList.getLength();
+            tableStatsMap.put(String.format(METRIC_PATH, storageAccountNameKey.getKey()), length);
         }
         return tableStatsMap;
     }

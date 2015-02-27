@@ -6,7 +6,6 @@ import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
 
-import java.io.InputStream;
 import java.net.URL;
 import java.util.HashMap;
 import java.util.List;
@@ -30,9 +29,8 @@ public abstract class StorageStatsCollector extends AbstractStatsCollector {
         
         URL url = azureHttpsClient.buildRequestUrl(STORAGE_ACCOUNT_REST, subscriptionId);
 
-        InputStream responseStream = azureHttpsClient.processGetRequest(url, restApiVersion, keyStorePath, keyStorePassword);
+        Document document = azureHttpsClient.processGetRequest(url, restApiVersion, keyStorePath, keyStorePassword);
 
-        Document document = azureHttpsClient.parseResponse(responseStream);
         NodeList storageAccountsNodeList = document.getElementsByTagName("StorageService");
         for(int i = 0; i < storageAccountsNodeList.getLength(); i++) {
             Element element = (Element)storageAccountsNodeList.item(i);
@@ -40,9 +38,8 @@ public abstract class StorageStatsCollector extends AbstractStatsCollector {
 
             if(storageAccountNames.contains(storageAccountName)) {
                 URL storageAccountKeysUrl = azureHttpsClient.buildRequestUrl(STORAGE_ACCOUNT_KEYS_REST, subscriptionId, storageAccountName);
-    
-                InputStream storageAccountKeysResponseStream = azureHttpsClient.processGetRequest(storageAccountKeysUrl, restApiVersion, keyStorePath, keyStorePassword);
-                Document storageAccountKeysDocument = azureHttpsClient.parseResponse(storageAccountKeysResponseStream);
+
+                Document storageAccountKeysDocument = azureHttpsClient.processGetRequest(storageAccountKeysUrl, restApiVersion, keyStorePath, keyStorePassword);
                 NodeList storageAccountKeysNodeList = storageAccountKeysDocument.getElementsByTagName("StorageServiceKeys");
                 String primaryKey = ((Element) storageAccountKeysNodeList.item(0)).getElementsByTagName("Primary").item(0).getTextContent();
                 storageAccountNameKey.put(storageAccountName, primaryKey);

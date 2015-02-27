@@ -124,7 +124,7 @@ public class AzureHttpsClient {
         }
     }
 
-    public InputStream processGetRequest(URL url, String restApiVersion, String keyStore, String keyStorePassword) {
+    public Document processGetRequest(URL url, String restApiVersion, String keyStore, String keyStorePassword) {
         SSLSocketFactory sslFactory = getSSLSocketFactory(keyStore, keyStorePassword);
         HttpsURLConnection con = null;
 
@@ -147,11 +147,20 @@ public class AzureHttpsClient {
         InputStream responseStream = null;
         try {
             responseStream = (InputStream) con.getContent();
+            Document document = parseResponse(responseStream);
+            return document;
         } catch (IOException e) {
             LOG.error(e.getMessage(), e);
             throw new RuntimeException(e.getMessage(), e);
+        } finally {
+            if (responseStream != null) {
+                try {
+                    responseStream.close();
+                } catch (IOException e) {
+                    LOG.error(e.getMessage(), e);
+                }
+            }
         }
-        return responseStream;
     }
 
     public URL buildRequestUrl(String urlString, String... subscriptionId) {
@@ -167,7 +176,7 @@ public class AzureHttpsClient {
         return url;
     }
 
-    public Document parseResponse(InputStream responseStream) {
+    private Document parseResponse(InputStream responseStream) {
         DocumentBuilderFactory builderFactory = DocumentBuilderFactory.newInstance();
         DocumentBuilder documentBuilder = null;
         try {
@@ -192,7 +201,7 @@ public class AzureHttpsClient {
         return document;
     }
 
-    public HttpsURLConnection createHttpConnectionWithHeadersForTable(String uri, String accountName, String accountKey) {
+    public Document createHttpConnectionWithHeadersForTable(String uri, String accountName, String accountKey) {
 
         try {
             URL myURL = new URL(uri);
@@ -207,14 +216,20 @@ public class AzureHttpsClient {
             String sign = tableSharedKeyAuth.sign(REQUEST_METHOD_GET, "", CONTENT_TYPE_XML, utcDate, myURL);
             con.setRequestProperty(AUTHORIZATION_HEADER, sign);
 
-            return con;
+            InputStream responseStream = (InputStream) con.getContent();
+            try {
+                Document document = parseResponse(responseStream);
+                return document;
+            } finally {
+                responseStream.close();
+            }
         } catch (IOException e) {
             LOG.error(e.getMessage(), e);
             throw new RuntimeException(e.getMessage(), e);
         }
     }
 
-    public HttpsURLConnection createHttpConnectionWithHeadersForBlobQueue(String uri, String accountName, String accountKey) {
+    public Document processRequestWithHeadersForBlobQueue(String uri, String accountName, String accountKey) {
 
         try {
             URL myURL = new URL(uri);
@@ -233,7 +248,13 @@ public class AzureHttpsClient {
             String sign = blobQueueSharedKeyAuth.sign(REQUEST_METHOD_GET, headers, myURL);
             con.setRequestProperty(AUTHORIZATION_HEADER, sign);
 
-            return con;
+            InputStream responseStream = (InputStream) con.getContent();
+            try {
+                Document document = parseResponse(responseStream);
+                return document;
+            } finally {
+                responseStream.close();
+            }
         } catch (IOException e) {
             LOG.error(e.getMessage(), e);
             throw new RuntimeException(e.getMessage(), e);

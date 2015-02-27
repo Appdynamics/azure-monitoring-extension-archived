@@ -6,7 +6,6 @@ import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
 
-import java.io.InputStream;
 import java.net.URL;
 import java.util.LinkedHashMap;
 import java.util.Map;
@@ -29,9 +28,7 @@ public class DiskStatsCollector extends AbstractStatsCollector {
     public Map<String, Number> collectStats(String keyStorePath, String keyStorePassword, String subscriptionId, String restApiVersion, Properties displayProperties) {
         URL url = azureHttpsClient.buildRequestUrl(DISKS_REST, subscriptionId);
 
-        InputStream responseStream = azureHttpsClient.processGetRequest(url, restApiVersion, keyStorePath, keyStorePassword);
-
-        Document document = azureHttpsClient.parseResponse(responseStream);
+        Document document = azureHttpsClient.processGetRequest(url, restApiVersion, keyStorePath, keyStorePassword);
 
         Map<String, Number> diskStatsMap = new LinkedHashMap<String, Number>();
 
