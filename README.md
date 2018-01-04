@@ -2,16 +2,16 @@
 
 This extension works only with the standalone machine agent.
 
-##Use Case
+## Use Case
 
 Windows Azure is an Internet-scale computing and services platform hosted in Microsoft data centers. It includes a number of features with corresponding developer services which can be used individually or together.
 
 
-##Prerequisite
+## Prerequisite
 Create and export management certificate to azure
 For steps to create a certificate and export to Azure visit http://gauravmantri.com/2013/08/25/consuming-windows-azure-service-management-api-in-java/
 
-##Installation
+## Installation
 
 1. Run "mvn clean install"
 2. Download and unzip the file 'target/AzureMonitor.zip' to \<machineagent install dir\}/monitors
@@ -49,10 +49,10 @@ For steps to create a certificate and export to Azure visit http://gauravmantri.
 	<b>STORAGE_ACCOUNT_NAMES_FOR_BLOB</b>: Storage account name for which blob level metrics to be fetched <br/>
 
 
-##Metrics
+## Metrics
 The following metrics are reported.
 
-###Subscription
+### Subscription
 
 | Metric Path  | Description  |
 |---------------- |------------- |
@@ -66,17 +66,17 @@ The following metrics are reported.
 |Azure/Subscription/{SubscriptionID}/MaxLocalNetworkSites|MaxLocalNetworkSites|
 |Azure/Subscription/{SubscriptionID}/MaxDnsServers|MaxDnsServers|
 
-###Disks
+### Disks
 | Metric Path  | Description  |
 |---------------- |------------- |
 |Azure/Disk/{Disk Name}/Disk Size|Disk Size|
 
-###OS Image
+### OS Image
 | Metric Path  | Description  |
 |---------------- |------------- |
 |Azure/OS Image/{Name}/LogicalSizeInGB|Logical OS Disk Size|
 
-###Website Management
+### Website Management
 | Metric Path  | Description  |
 |---------------- |------------- |
 |Azure/Web Space/{Web Space Name}/CurrentNumberOfWorkers|
@@ -104,35 +104,35 @@ The following metrics are reported.
 |Azure/Web Space/{Web Space Name}/{Web Site Name}/Usage Metrics/File System Storage/{Unit}/CurrentValue|File system storage current value|
 |Azure/Web Space/{Web Space Name}/{Web Site Name}/Usage Metrics/File System Storage/{Unit}/Limit|File system storage  limit|
 
-###Database Server 
+### Database Server 
 | Metric Path  | Description  |
 |---------------- |------------- |
 |Azure/DATABASE SERVER/{DB Server Name}/DATABASE/{DB Name}/MaxSizeBytes|Max DB size in bytes|
 |Azure/DATABASE SERVER/{DB Server Name}/DATABASE/{DB Name}/SizeBytes|DB Size in bytes|
 
-###Storage
+### Storage
 
-####Table
+#### Table
 | Metric Path  | Description  |
 |---------------- |------------- |
 |Azure/Storage/Table/{Storage Account Name}/No Of Tables|Number of tables in storage account|
 
-####Blob
+#### Blob
 | Metric Path  | Description  |
 |---------------- |------------- |
 |Azure/Storage/Blob/{Storage Account Name}/Container/{Container Name}/Blobs/{Blob Name}/Size|Blob size|
 
-#Custom Dashboard
+# Custom Dashboard
 ![](https://github.com/Appdynamics/azure-monitoring-extension/raw/master/Azure_Custom_Dashboard.png)
 
-##Contributing
+## Contributing
 
 Always feel free to fork and contribute any changes directly here on GitHub.
 
-##Community
+## Community
 
 Find out more in the [AppSphere](http://appsphere.appdynamics.com/t5/AppDynamics-eXchange/AppDynamics-Azure-Monitoring-Extension/idi-p/6863) community.
 
-##Support
+## Support
 
 For any questions or feature request, please contact [AppDynamics Center of Excellence](mailto:help@appdynamics.com).
