@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<project name="maven-antrun-" default="main"  >
+<target name="main">
+  <property name="target.dir" value="/Users/bhuvnesh.kumar/repos/appdynamics/extensions/azure-monitoring-extension/target/AzureMonitor"/>
+  <mkdir dir="/Users/bhuvnesh.kumar/repos/appdynamics/extensions/azure-monitoring-extension/target/AzureMonitor"/>
+  <copy todir="/Users/bhuvnesh.kumar/repos/appdynamics/extensions/azure-monitoring-extension/target/AzureMonitor">
+    <fileset includes="monitor.xml" dir="src/main/resources/config"/>
+    <fileset includes="metrics.properties" dir="src/main/resources/config"/>
+    <fileset includes="LICENSE.txt" dir="/Users/bhuvnesh.kumar/repos/appdynamics/extensions/azure-monitoring-extension"/>
+    <fileset includes="NOTICE.txt" dir="/Users/bhuvnesh.kumar/repos/appdynamics/extensions/azure-monitoring-extension"/>
+    <fileset includes="azure-monitoring-extension.jar" dir="/Users/bhuvnesh.kumar/repos/appdynamics/extensions/azure-monitoring-extension/target"/>
+  </copy>
+  <zip destfile="/Users/bhuvnesh.kumar/repos/appdynamics/extensions/azure-monitoring-extension/target/AzureMonitor-1.1.1.zip">
+    <zipfileset prefix="AzureMonitor/" filemode="755" dir="/Users/bhuvnesh.kumar/repos/appdynamics/extensions/azure-monitoring-extension/target/AzureMonitor"/>
+  </zip>
+  <delete dir="/Users/bhuvnesh.kumar/repos/appdynamics/extensions/azure-monitoring-extension/target/AzureMonitor"/>
+</target>
+</project>

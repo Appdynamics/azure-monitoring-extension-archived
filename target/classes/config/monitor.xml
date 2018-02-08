@@ -1,0 +1,36 @@
+<monitor>
+        <name>AzureMonitor</name>
+        <type>managed</type>
+        <description>Windows Azure monitor</description>
+        <monitor-configuration></monitor-configuration>
+        <monitor-run-task>
+                <execution-style>periodic</execution-style>
+                <execution-frequency-in-seconds>60</execution-frequency-in-seconds>
+                <name>Azure Monitor Run Task</name>
+                <display-name>Azure Monitor Task</display-name>
+                <description>Azure Monitor Task</description>
+                <type>java</type>
+                <execution-timeout-in-secs>60</execution-timeout-in-secs>
+                <task-arguments>
+                    <argument name="subscriptionId" is-required="true" default-value="4814ab8f-ebb8-42b5-ac5c-69b675d19e2c" />
+                    <argument name="keyStorePath" is-required="true" default-value="/home/satish/AppDynamics/Azure/WindowsAzureKeyStore.jks" />
+                    <argument name="keyStorePassword" is-required="true" default-value="appdAzure123" />
+
+                    <!-- Azure REST API version, More info at http://msdn.microsoft.com/en-us/library/windowsazure/dn166981.aspx -->
+                    <argument name="x-ms-version" is-required="true" default-value="2013-11-01" />
+                    <!-- The configuration file which lists out the metrics to be included from monitoring on controller-->
+                    <argument name="include-metrics-path" is-required="true" default-value="monitors/AzureMonitor/metrics.properties" />
+
+                    <!--Proxy server details-->
+                    <argument name="proxyHost" is-required="false" default-value="" />
+                    <argument name="proxyPort" is-required="false" default-value="" />
+                    <argument name="proxyUsername" is-required="false" default-value="" />
+                    <argument name="proxyPassword" is-required="false" default-value="" />
+
+		       </task-arguments>
+                <java-task>
+                    <classpath>azure-monitoring-extension.jar</classpath>
+                        <impl-class>com.appdynamics.monitors.azure.AzureMonitor</impl-class>
+                </java-task>
+        </monitor-run-task>
+</monitor>
